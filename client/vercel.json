@@ -1,15 +1,13 @@
 {
-  "vercel.json": {
-    "buildCommand": "npm run build",
-    "outputDirectory": "dist",
-    "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/"
-      }
-    ],
-    "env": {
-      "VITE_API_URL": "https://shopnexa-backend.onrender.com"
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
     }
+  ],
+  "env": {
+    "VITE_API_URL": "https://shopnexa-pro.onrender.com"
   }
 }
