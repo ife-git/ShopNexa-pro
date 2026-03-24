@@ -161,8 +161,10 @@ app.use("/api", (req, res) => {
 });
 
 // Handle React routing in production
+// Handle React routing in production
 if (process.env.NODE_ENV === "production") {
-  app.get("*", (req, res) => {
+  // Use a catch-all route that doesn't use wildcard syntax
+  app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 } else {
