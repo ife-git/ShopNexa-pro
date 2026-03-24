@@ -1,11 +1,10 @@
-# render.yaml
 services:
   - type: web
-    name: shopnexa-backend
+    name: shopnexa-pro
     runtime: node
-    plan: free
-    buildCommand: cd server && npm install
-    startCommand: cd server && npm start
+    rootDir: server # ← Add this line!
+    buildCommand: npm install
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -13,5 +12,3 @@ services:
         sync: false
       - key: SESSION_SECRET
         generateValue: true
-      - key: FRONTEND_URL
-        value: https://shopnexa.vercel.app #replace with vercel link replace "VITE_API_URL" in vercel,json with the render link
