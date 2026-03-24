@@ -162,9 +162,19 @@ app.use("/api", (req, res) => {
 
 // Handle React routing in production
 // Handle React routing in production
+// Handle React routing in production
 if (process.env.NODE_ENV === "production") {
-  // Use a catch-all route that doesn't use wildcard syntax
-  app.get("/*", (req, res) => {
+  // Serve index.html for any non-API request
+  app.use((req, res, next) => {
+    // Skip if it's an API request
+    if (req.path.startsWith("/api")) {
+      return next();
+    }
+    // Skip if it's a static file (has extension)
+    if (req.path.includes(".")) {
+      return next();
+    }
+    // Serve index.html for all other routes
     res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 } else {
