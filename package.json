@@ -1,0 +1,6 @@
+{
+  "name": "shopnexa-pro",
+  "scripts": {
+    "build": "cd client && npm install && npm run build"
+  }
+}
