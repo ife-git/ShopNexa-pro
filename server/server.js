@@ -73,6 +73,8 @@ const corsOptions = {
       "https://shopnexa.vercel.app", // Your Vercel frontend
       "https://shopnexa-git-main.vercel.app", // Vercel preview URLs
       "https://shopnexa-*.vercel.app", // All Vercel preview deployments
+      "https://shopnexa-frontend.onrender.com", // ← ADD THIS LINE!
+      "https://*.onrender.com",
     ];
 
     // Check if origin matches any allowed pattern
