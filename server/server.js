@@ -73,7 +73,7 @@ const corsOptions = {
       "https://shopnexa.vercel.app", // Your Vercel frontend
       "https://shopnexa-git-main.vercel.app", // Vercel preview URLs
       "https://shopnexa-*.vercel.app", // All Vercel preview deployments
-      "https://shopnexa-frontend.onrender.com", // ← ADD THIS LINE!
+      "https://shopnexa-pro-frontend.onrender.com", // ← ADD THIS LINE!
       "https://*.onrender.com",
     ];
 
@@ -127,9 +127,8 @@ app.use(
 );
 
 // Static files
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/dist")));
-} else {
+// Static files - only serve from public folder in development
+if (process.env.NODE_ENV !== "production") {
   app.use(express.static(path.join(__dirname, "public")));
 }
 
@@ -165,29 +164,20 @@ app.use("/api", (req, res) => {
 // Handle React routing in production
 // Handle React routing in production
 // Handle React routing in production
-if (process.env.NODE_ENV === "production") {
-  // Serve index.html for any non-API request
-  app.use((req, res, next) => {
-    // Skip if it's an API request
-    if (req.path.startsWith("/api")) {
-      return next();
-    }
-    // Skip if it's a static file (has extension)
-    if (req.path.includes(".")) {
-      return next();
-    }
-    // Serve index.html for all other routes
-    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-  });
-} else {
-  app.use((req, res) => {
-    if (req.path.startsWith("/api")) {
-      res.status(404).json({ error: "API route not found" });
+// 404 handler for non-API routes
+app.use((req, res) => {
+  if (req.path.startsWith("/api")) {
+    res.status(404).json({ error: "API route not found" });
+  } else {
+    // In production, frontend handles routing
+    if (process.env.NODE_ENV === "production") {
+      // Return a simple JSON for non-API routes (frontend handles routing)
+      res.status(404).json({ error: "Not found" });
     } else {
       res.status(404).json({ error: "Route not found" });
     }
-  });
-}
+  }
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
