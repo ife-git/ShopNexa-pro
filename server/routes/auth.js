@@ -25,3 +25,8 @@ authRouter.get("/me", (req, res) => {
     // Add more user details if needed
   });
 });
+
+// routes/auth.js - add this temporary test route
+authRouter.get("/test", (req, res) => {
+  res.json({ message: "Auth router is working!" });
+});

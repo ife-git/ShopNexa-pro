@@ -80,6 +80,7 @@ export async function registerUser(req, res) {
 // @desc    Login user
 // @route   POST /api/auth/login
 export async function loginUser(req, res) {
+  console.log("🔐 Login function called!");
   let { username, password } = req.body;
 
   if (!username || !password) {
