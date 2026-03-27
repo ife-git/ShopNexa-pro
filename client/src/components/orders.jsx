@@ -1,6 +1,7 @@
 // pages/Orders.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Add useNavigate import
+import { API_URL } from "../config";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -13,7 +14,7 @@ export default function Orders() {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("/api/orders", {
+      const response = await fetch(`${API_URL}/api/orders`, {
         credentials: "include",
       });
       const data = await response.json();

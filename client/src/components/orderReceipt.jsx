@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { useNotification } from "../context/notificationContext";
+import { API_URL } from "../config";
 
 export default function OrderReceipt() {
   const { orderId } = useParams();
@@ -18,7 +19,7 @@ export default function OrderReceipt() {
 
   const fetchOrderDetails = async () => {
     try {
-      const response = await fetch(`/api/orders/${orderId}`, {
+      const response = await fetch(`${API_URL}/api/orders/${orderId}`, {
         credentials: "include",
       });
 

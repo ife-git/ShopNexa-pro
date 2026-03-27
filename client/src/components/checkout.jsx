@@ -1,11 +1,11 @@
 // pages/Checkout.jsx
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "../context/cartContext"; // Named import with curly braces
+import { CartContext } from "../context/cartContext";
 import { useAuth } from "../context/authContext";
 import { useNotification } from "../context/notificationContext";
+import { API_URL } from "../config"; // ← ADD THIS IMPORT
 
-// Then use useContext
 export default function Checkout() {
   const { cart, clearCart } = useContext(CartContext);
   const { user } = useAuth();
@@ -17,23 +17,24 @@ export default function Checkout() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // pages/Checkout.jsx
-  // Remove the cart items from request body - backend will get from database
   const handlePlaceOrder = async () => {
     setProcessing(true);
 
     try {
-      const response = await fetch("/api/orders/checkout", {
+      // CHANGE THIS:
+      // const response = await fetch("/api/orders/checkout", {
+
+      // TO THIS:
+      const response = await fetch(`${API_URL}/api/orders/checkout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        // No body needed! Backend gets cart from database
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        clearCart(); // This now clears the backend cart too
+        clearCart();
         showNotification("✅ Order placed successfully!", "success");
         navigate(`/order-receipt/${data.order.id}`);
       } else {
