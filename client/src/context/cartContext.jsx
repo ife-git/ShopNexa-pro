@@ -1,5 +1,6 @@
 // client/src/context/cartContext.jsx
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { API_URL } from "../config";
 
 export const CartContext = createContext();
 
@@ -23,7 +24,7 @@ export default function CartProvider({ children }) {
   // Fetch cart from backend
   const fetchCart = async () => {
     try {
-      const response = await fetch("/api/cart", {
+      const response = await fetch(`${API_URL}/api/cart`, {
         credentials: "include",
       });
 
@@ -51,7 +52,7 @@ export default function CartProvider({ children }) {
   // Add to cart - sync with backend
   const addToCart = async (item) => {
     try {
-      const response = await fetch("/api/cart/add", {
+      const response = await fetch(`${API_URL}/api/cart/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -77,14 +78,16 @@ export default function CartProvider({ children }) {
 
     try {
       // First, get the cart item ID from backend
-      const cartResponse = await fetch("/api/cart", { credentials: "include" });
+      const cartResponse = await fetch(`${API_URL}/api/cart`, {
+        credentials: "include",
+      });
       const cartData = await cartResponse.json();
       const backendItem = cartData.items.find(
         (item) => item.productId === itemToRemove.id,
       );
 
       if (backendItem) {
-        await fetch(`/api/cart/${backendItem.cartItemId}`, {
+        await fetch(`${API_URL}/api/cart/${backendItem.cartItemId}`, {
           method: "DELETE",
           credentials: "include",
         });
@@ -98,7 +101,7 @@ export default function CartProvider({ children }) {
   // Clear cart - sync with backend
   const clearCart = async () => {
     try {
-      await fetch("/api/cart/all", {
+      await fetch(`${API_URL}/api/cart/all`, {
         method: "DELETE",
         credentials: "include",
       });
